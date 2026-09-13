@@ -1,0 +1,12 @@
+# Dev local API (optionnel)
+services:
+  tresor-api:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    ports:
+      - "1010:1010"
+    env_file:
+      - deploy/truenas/.env
+    environment:
+      PORT: "1010"
