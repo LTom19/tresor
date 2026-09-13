@@ -48,3 +48,7 @@ npm run preview
 Le guide de référence (Custom App TrueNAS + nginx) est dans [`DEPLOY.md`](DEPLOY.md).
 
 nginx sert le frontend depuis un stockage monté dans l’app : `/data/tresor` → `/mnt/tank/Tresor` (le `root` nginx est `/data/tresor/web`).
+
+## Licence
+
+Ce projet est sous [Apache License 2.0](LICENSE) : vous pouvez l’utiliser, le modifier et le redistribuer, y compris dans un projet commercial, en conservant les mentions de licence et de copyright.
