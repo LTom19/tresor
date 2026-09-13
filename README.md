@@ -2,6 +2,8 @@
 
 Application web de gestion de finances personnelles, entièrement en français.
 
+Le déploiement de référence se fait via une **Custom App TrueNAS**. L’application peut aussi être adaptée pour tourner autrement (Docker Compose, VPS, machine locale, etc.).
+
 ## Fonctionnalités
 
 - **Compte Courant** et **Placement** (Livret A + Épargne)
@@ -41,4 +43,8 @@ npm run build
 npm run preview
 ```
 
-Le déploiement TrueNAS / nginx est décrit dans [`DEPLOY.md`](DEPLOY.md).
+## Déploiement
+
+Le guide de référence (Custom App TrueNAS + nginx) est dans [`DEPLOY.md`](DEPLOY.md).
+
+nginx sert le frontend depuis un stockage monté dans l’app : `/data/tresor` → `/mnt/tank/Tresor` (le `root` nginx est `/data/tresor/web`).

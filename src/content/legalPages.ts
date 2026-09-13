@@ -39,7 +39,7 @@ export const legalPages: Record<LegalPageId, LegalDocument> = {
         paragraphs: [
           `${L.hostName}`,
           L.hostAddress,
-          'Les données sont stockées sur un serveur privé (NAS) situé en France, accessible via le domaine ci-dessus.',
+          'Les données sont stockées sur un serveur privé situé en France, accessible via le domaine ci-dessus.',
         ],
       },
       {
@@ -198,7 +198,7 @@ export const legalPages: Record<LegalPageId, LegalDocument> = {
         title: '5. Destinataires des données',
         paragraphs: [
           'Vos données ne sont ni vendues ni cédées à des tiers.',
-          "Elles sont hébergées sur l'infrastructure privée de l'éditeur (serveur NAS en France).",
+          "Elles sont hébergées sur l'infrastructure privée de l'éditeur (serveur en France).",
           "Aucun outil publicitaire ou de profilage commercial n'est utilisé.",
         ],
       },

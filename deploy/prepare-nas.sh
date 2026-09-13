@@ -1,7 +1,7 @@
 #!/bin/bash
-# Prépare deploy/nas-upload/ prêt à copier sur le NAS (backend + frontend)
+# Prépare deploy/nas-upload/ prêt à copier sur le serveur (backend + frontend)
 # Usage : ./deploy/prepare-nas.sh
-# Puis copiez deploy/nas-upload/* vers votre dataset NAS (ex. /mnt/tank/Tresor/)
+# Puis copiez deploy/nas-upload/* vers votre dataset (ex. /mnt/tank/Tresor/)
 
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -38,10 +38,10 @@ echo "✓ Terminé !"
 echo ""
 echo "Copiez TOUT le contenu de :"
 echo "  $OUT/"
-echo "vers le NAS (adaptez le chemin) :"
+echo "vers le serveur (adaptez le chemin) :"
 echo "  /mnt/tank/Tresor/"
 echo ""
-echo "Structure sur le NAS :"
+echo "Structure sur le serveur :"
 echo "  …/dist/        → API Node.js (Custom App)"
 echo "  …/web/         → frontend React (nginx root)"
 echo ""

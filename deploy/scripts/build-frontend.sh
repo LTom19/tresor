@@ -7,7 +7,7 @@ echo "VITE_API_URL=/api" > .env.production.local
 npm run build
 echo ""
 echo "Build terminé : dist/"
-echo "Pour un déploiement NAS complet, utilisez plutôt :"
+echo "Pour un déploiement serveur complet, utilisez plutôt :"
 echo "  ./deploy/prepare-nas.sh"
 echo ""
-echo "Sinon, copiez dist/ vers le dossier web de votre dataset NAS."
+echo "Sinon, copiez dist/ vers le dossier web de votre dataset (ex. /data/tresor/web dans nginx)."

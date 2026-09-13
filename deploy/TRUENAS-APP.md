@@ -1,6 +1,6 @@
 # Trésor — Custom App TrueNAS (copier-coller)
 
-Un dossier sur le NAS + une Application personnalisée TrueNAS.
+Un dossier sur le serveur + une Application personnalisée TrueNAS. Le même paquet peut être adapté à un autre hébergement.
 
 ---
 
@@ -12,11 +12,11 @@ chmod +x deploy/prepare-nas.sh
 ./deploy/prepare-nas.sh
 ```
 
-Cela crée `deploy/nas-upload/` avec **backend + frontend** (tout ce qu’il faut copier sur le NAS).
+Cela crée `deploy/nas-upload/` avec **backend + frontend** (tout ce qu’il faut copier sur le serveur).
 
 ---
 
-## 2. Copier sur le NAS
+## 2. Copier sur le serveur
 
 Copiez **tout le contenu** de `deploy/nas-upload/` vers :
 
@@ -24,7 +24,7 @@ Copiez **tout le contenu** de `deploy/nas-upload/` vers :
 /mnt/tank/Tresor/
 ```
 
-Résultat sur le NAS :
+Résultat sur le serveur :
 
 ```
 /mnt/tank/Tresor/
@@ -42,7 +42,7 @@ Résultat sur le NAS :
     └── assets/
 ```
 
-nginx lit le frontend directement dans cette dataset : `root /mnt/tank/Tresor/web;`
+nginx lit le frontend via un stockage monté dans l’app nginx : `/data/tresor` → `/mnt/tank/Tresor` (dans le conteneur : `root /data/tresor/web;`).
 
 ---
 
@@ -94,7 +94,7 @@ Restart Policy : **Unless Stopped**
 
 (Pas de réseau custom — laissez vide.)
 
-### Storage Configuration
+### Storage Configuration (app API)
 | Champ | Valeur |
 |---|---|
 | Type | Host Path |
@@ -109,26 +109,36 @@ Restart Policy : **Unless Stopped**
 
 → **Save / Install**
 
-Test : `curl http://IP_NAS:1010/health` → `{"status":"ok"}`
+Test : `curl http://IP_SERVEUR:1010/health` → `{"status":"ok"}`
 
 ---
 
 ## 4. nginx
 
-Ajoutez la config nginx (`deploy/nginx/tresor.conf`) :
+Ajoutez la config nginx (`deploy/nginx/tresor.conf`).
 
-- **root** : `/mnt/tank/Tresor/web` (même dataset que l’app Node.js)
+Dans les paramètres de l’app nginx, montez aussi ce stockage (même dataset que l’API) :
+
+| Champ | Valeur |
+|---|---|
+| Type | Host Path |
+| Mount Path | `/data/tresor` |
+| Host Path | `/mnt/tank/Tresor` |
+
+Dans le conteneur nginx :
+
+- **root** : `/data/tresor/web` (équivalent hôte : `/mnt/tank/Tresor/web`)
 - **proxy** `/api/` → `http://127.0.0.1:1010/api/`
 
 ### NPM
 | Champ | Valeur |
 |---|---|
 | Domain | `votre-domaine.example` |
-| Forward IP | IP du NAS |
+| Forward IP | IP du serveur |
 | Forward Port | **80** (nginx) **ou 1010** (API sert aussi le frontend) |
 | SSL | Let's Encrypt |
 
-> **« Cannot GET / »** : NPM pointe vers le port **1010** sans frontend servi par l’API (ancienne version). Soit NPM → port **80** (nginx, `root /mnt/tank/Tresor/web`), soit recopiez la dernière version du backend (l’API sert aussi `/app/web`).
+> **« Cannot GET / »** : NPM pointe vers le port **1010** sans frontend servi par l’API (ancienne version). Soit NPM → port **80** (nginx, `root /data/tresor/web`), soit recopiez la dernière version du backend (l’API sert aussi `/app/web`).
 
 ---
 
